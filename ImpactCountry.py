@@ -1,9 +1,11 @@
+from Enter_Country import enter_country
+
 import requests
 import json
 
-def impact (TotalImpactCountry):
-    para = {'Impacted Count': TotalImpactCountry}
-    response = requests.get("https://api.thevirustracker.com/free-api?global=stats", params=para)
+def impact (countryTotal):
+    para = {'countryTotal': countryTotal}
+    response = requests.get("https://api.thevirustracker.com/free-api", params=para)
     print(response.status_code)
 
     def jprint(obj):
@@ -11,6 +13,9 @@ def impact (TotalImpactCountry):
         text = json.dumps(obj, sort_keys=True, indent=4)
         print(text)
 
-    jprint(response.json())
+    country_data = response.json()['countrydata']
+    jprint(country_data)
 
-impact(TotalImpactCountry="US")
+impact(countryTotal=enter_country())
+
+
